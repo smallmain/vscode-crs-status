@@ -1,0 +1,66 @@
+{
+  "name": "vscode-crs-status",
+  "displayName": "Claude Relay Service Usage Status",
+  "description": "Display Claude Relay Service (CRS) usage information in the status bar",
+  "version": "1.0.0",
+  "publisher": "smallmain",
+  "icon": "icon.png",
+  "repository": "github:smallmain/vscode-crs-status",
+  "bugs": "https://github.com/smallmain/vscode-crs-status/issues",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "crsStatus.refresh",
+        "title": "CRS Status: Refresh Usage Data"
+      },
+      {
+        "command": "crsStatus.openSettings",
+        "title": "CRS Status: Open Settings"
+      }
+    ],
+    "configuration": {
+      "title": "CRS Status",
+      "properties": {
+        "crsStatus.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "CRS API Base URL"
+        },
+        "crsStatus.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "CRS API Key"
+        },
+        "crsStatus.refreshInterval": {
+          "type": "number",
+          "default": 60,
+          "minimum": 1,
+          "description": "Refresh interval in seconds"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.19.0",
+    "typescript": "^5.9.3"
+  }
+}
