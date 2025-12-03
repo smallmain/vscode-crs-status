@@ -2,7 +2,7 @@
 
 A VS Code extension that displays [Claude Relay Service (CRS)](https://github.com/smallmain/claude-relay-service) usage information in the status bar.
 
-![screenshot](screenshot.png)
+<img src="screenshot.png" alt="screenshot" width="600">
 
 ## Installation
 
