@@ -2,7 +2,7 @@
   "name": "vscode-crs-status",
   "displayName": "Claude Relay Service Usage Status",
   "description": "Display Claude Relay Service (CRS) usage information in the status bar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "SmallMain",
   "icon": "icon.png",
   "repository": "github:smallmain/vscode-crs-status",
