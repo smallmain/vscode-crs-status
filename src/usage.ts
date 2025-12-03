@@ -19,7 +19,7 @@ interface MonthlyUsage {
 }
 
 interface TotalUsage {
-  cost: number;
+  cost: CostInfo;
   tokens: number;
 }
 
@@ -195,7 +195,10 @@ async function fetchUsageData(baseUrl: string, apiKey: string): Promise<UsageInf
       tokens: monthlyTotals.tokens,
     },
     total: {
-      cost: limits.currentTotalCost || 0,
+      cost: {
+        used: limits.currentTotalCost || 0,
+        total: limits.totalCostLimit || 0,
+      },
       tokens: usage?.total?.allTokens || 0,
     },
     lastUpdate: new Date(),

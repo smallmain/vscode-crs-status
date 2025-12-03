@@ -3,7 +3,7 @@
   "displayName": "Claude Relay Service Usage Status",
   "description": "Display Claude Relay Service (CRS) usage information in the status bar",
   "version": "1.0.0",
-  "publisher": "smallmain",
+  "publisher": "SmallMain",
   "icon": "icon.png",
   "repository": "github:smallmain/vscode-crs-status",
   "bugs": "https://github.com/smallmain/vscode-crs-status/issues",
@@ -34,20 +34,35 @@
       "title": "CRS Status",
       "properties": {
         "crsStatus.baseUrl": {
+          "order": 0,
           "type": "string",
           "default": "",
           "description": "CRS API Base URL"
         },
         "crsStatus.apiKey": {
+          "order": 1,
           "type": "string",
           "default": "",
           "description": "CRS API Key"
         },
         "crsStatus.refreshInterval": {
+          "order": 2,
           "type": "number",
           "default": 60,
           "minimum": 1,
-          "description": "Refresh interval in seconds"
+          "description": "Refresh interval in seconds."
+        },
+        "crsStatus.showUsageInStatusBar": {
+          "order": 3,
+          "type": "boolean",
+          "default": true,
+          "description": "Show usage information in the status bar."
+        },
+        "crsStatus.showAmountInStatusBar": {
+          "order": 4,
+          "type": "boolean",
+          "default": true,
+          "description": "Show the amount values in the status bar."
         }
       }
     }

@@ -18,7 +18,11 @@ function isConfigured(): boolean {
 /**
  * Get configuration values
  */
-function getConfig(): { baseUrl: string; apiKey: string; refreshInterval: number } {
+function getConfig(): {
+  baseUrl: string;
+  apiKey: string;
+  refreshInterval: number;
+} {
   const config = vscode.workspace.getConfiguration('crsStatus');
   return {
     baseUrl: config.get<string>('baseUrl', ''),
@@ -51,6 +55,9 @@ async function refreshUsageData(forceRefresh: boolean = false): Promise<void> {
 
   try {
     const usageInfo = await getUsageInfo(baseUrl, apiKey);
+    if (usageInfo.error) {
+      throw new Error(usageInfo.error);
+    }
     statusBarManager.showReady();
     statusBarManager.updateTooltip(usageInfo);
   } catch (error) {
@@ -84,31 +91,42 @@ export function activate(context: vscode.ExtensionContext): void {
   statusBarManager = new StatusBarManager();
 
   // Register refresh command
-  const refreshCommand = vscode.commands.registerCommand('crsStatus.refresh', () => {
-    refreshUsageData(true);
-  });
+  const refreshCommand = vscode.commands.registerCommand(
+    'crsStatus.refresh',
+    () => {
+      refreshUsageData(true);
+    },
+  );
 
   // Register open settings command
-  const openSettingsCommand = vscode.commands.registerCommand('crsStatus.openSettings', () => {
-    vscode.commands.executeCommand('workbench.action.openSettings', 'crsStatus');
-  });
+  const openSettingsCommand = vscode.commands.registerCommand(
+    'crsStatus.openSettings',
+    () => {
+      vscode.commands.executeCommand(
+        'workbench.action.openSettings',
+        'crsStatus',
+      );
+    },
+  );
 
   // Listen for configuration changes
-  const configChangeListener = vscode.workspace.onDidChangeConfiguration((event) => {
-    if (event.affectsConfiguration('crsStatus')) {
-      // Re-setup auto-refresh with new interval
-      setupAutoRefresh();
-      // Refresh data with new config
-      refreshUsageData(true);
-    }
-  });
+  const configChangeListener = vscode.workspace.onDidChangeConfiguration(
+    (event) => {
+      if (event.affectsConfiguration('crsStatus')) {
+        // Re-setup auto-refresh with new interval
+        setupAutoRefresh();
+        // Refresh data with new config
+        refreshUsageData(true);
+      }
+    },
+  );
 
   // Add disposables to context
   context.subscriptions.push(
     statusBarManager,
     refreshCommand,
     openSettingsCommand,
-    configChangeListener
+    configChangeListener,
   );
 
   // Initial state check
